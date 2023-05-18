@@ -1,18 +1,17 @@
+
 /*
 
 Usage:
 ~~~~~~
-This class is abstract, so you must inherit from it. Override the OnUserCreate() function
-with all the stuff you need for your application (for thready reasons it's best to do
-this in this function and not your class constructor). Override the OnUserUpdate(float fElapsedTime)
-function with the good stuff, it gives you the elapsed time since the last call so you
+This class is abstract, so you must inherit from it. Override the pure virtual function OnUserCreate() 
+with all the assets you need for your application. Override the OnUserUpdate(float fElapsedTime)
+function with the game mechanics, it gives you the elapsed time since the last call so you
 can modify your stuff dynamically. Both functions should return true, unless you need
 the application to close.
 
 	int main()
 	{
-		// Use ConsoleGameEngine derived app
-		OneLoneCoder_Example game;
+		CMDGameEngine game;
 
 		// Create a console with resolution 160x100 characters
 		// Each character occupies 8x8 pixels
@@ -33,17 +32,15 @@ the current cursor position, and m_mouse[1..5] returns the mouse buttons.
 The draw routines treat characters like pixels. By default they are set to white solid
 blocks - but you can draw any unicode character, using any of the colours listed below.
 
-
 */
 
 #pragma once
 // adds a comment in the object file that the linker can read 
-// the following code tell linked to add winmm.lib to the list of libraries dependencies 
+// the following code tells linker to add winmm.lib to the list of libraries dependencies 
 #pragma comment(lib, "winmm.lib")
 
 #ifndef UNICODE
-#error Please enable UNICODE for your compiler! VS: Project Properties -> General -> \
-Character Set -> Use Unicode. Thanks! - Javidx9
+#error [UNICODE DISABLED] 
 #endif
 
 #include <windows.h>
@@ -877,7 +874,7 @@ private:
 
 				// Update Title & Present Screen Buffer
 				wchar_t s[256];
-				swprintf_s(s, 256, L"OneLoneCoder.com - Console Game Engine - %s - FPS: %3.2f", m_sAppName.c_str(), 1.0f / fElapsedTime);
+				swprintf_s(s, 256, L"CMDGameEngine - %s - FPS: %3.2f", m_sAppName.c_str(), 1.0f / fElapsedTime);
 				SetConsoleTitle(s);
 				WriteConsoleOutput(m_hConsole, m_bufScreen, { (short)m_nScreenWidth, (short)m_nScreenHeight }, { 0,0 }, &m_rectWindow);
 			}
